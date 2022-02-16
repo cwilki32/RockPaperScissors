@@ -16,10 +16,16 @@ public class RockPaperScissors {
         //call opponent move with variable named ComputerPlay
         String computerPlay = computer.getOpponentMove();
         int isWinner;
+        String userPlay = "XX";
 
         Scanner userInput = new Scanner(System.in);
-        System.out.println("Pick a move: Rock, Paper, or Scissors");
-        String userPlay = userInput.next();
+
+        while (userPlay.equals("Rock") == false || (userPlay.equals("Paper")) == false || (userPlay.equals("Scissors"))
+        == false) {
+
+            System.out.println("Pick a move: Rock, Paper, or Scissors");
+            userPlay = userInput.next();
+        }
 
         //print computer move
         System.out.println("Computer chose " + computerPlay);
