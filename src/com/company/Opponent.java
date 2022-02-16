@@ -3,66 +3,71 @@ package com.company;
 import java.util.Random;
 
 public class Opponent {
-    // create an opponent array or if loop
-    // random int to generate opponent move
 
     public Random rand = new Random();
     private String[] moves = {"Rock", "Paper", "Scissors"};
+    private int win = 0;
+    private int loss = 0;
+    private int tie = 0;
+    private int probRock = 1;
+    private int probPaper = 1;
+    private int probScissors = 1;
 
-    //set opponent move
-    public String getOpponentMove() {
-        //String response;
-        int opponentMove = rand.nextInt(3);
-        //response = intToString(opponentMove);
-        return moves[opponentMove];
 
+    public String getOpponentMove() { //set opponent move
+        int prob;
+        int total = probRock+probPaper+probScissors;
+        prob = rand.nextInt(total);
+
+        if( prob >=0 && prob < probRock){ // might be less than or equal through?
+            return moves[0];
+        }
+
+        if(prob >= probRock && prob < probPaper){
+            return moves[1];
+        }
+        return moves[2];
     }
-    //create method to call int to string
-    /*public String intToString(int i) {
-        if (i == 0)
-            return "Rock";
-        else if (i == 1)
-            return "Paper";
-        else if (i == 2)
-            return "Scissors";
-        else
-            return "Please enter another choice."; //attempt 1
-        }*/
 
-    //write method called compare that compares user choice to opponent move
     public int didUserWin(String user, String computer) {
-        if (user.equals(computer))
-            return 0;
-        else if (user.equals("Rock")) {
+        if (user.equals("Rock")) {
+            probPaper = probPaper + 2;
             if (computer.equals("Scissors"))
                 return 1;
-            else if (computer.equals("Paper"))
+            if (computer.equals("Paper"))
                 return -1;
         }
         else if (user.equals("Scissors")) {
-                if (computer.equals("Rock"))
-                    return -1;
-                else if (computer.equals("Paper"))
-                    return 1;
+            probRock = probRock + 2;
+            if (computer.equals("Rock"))
+                return -1;
+            if (computer.equals("Paper"))
+                return 1;
         }
         else if (user.equals("Paper")) {
+            probScissors = probScissors + 2;
                 if (computer.equals("Rock"))
                     return 1;
-                else if (computer.equals("Scissors"))
+                if (computer.equals("Scissors"))
                     return -1;
         }
-         {
-                System.out.println("Error!");
-                return 2;
-            }
+        return 0;
         }
-        //declare scoreboard method
-        public void scoreBoard(int x) {
-            if (x == 0)
-            System.out.println("You tied!");
-            else if (x == 1)
-            System.out.println("You won!");
-            else if (x == -1)
-            System.out.println("You lost!");
+
+        public void scoreBoard(int x) { //declare scoreboard method
+            if (x == 0) {
+                System.out.println("You tied!");
+                tie++;
+            }
+            else if (x == 1){
+                System.out.println("You won!");
+                win++;
+            }
+            else if (x == -1){
+                System.out.println("You lost!");
+                loss++;
+            }
+            System.out.println("You have "+win+" wins, "+loss+" losses, and "+tie+" ties");
+            System.out.println("\n");
         }
     }
